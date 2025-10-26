@@ -9,13 +9,13 @@ class Solution:
         [4,2,4] -> good
         """
         # Map to maintain sorted frequency map of current window
-        freq = {}
+        freq = defaultdict(int)
         left = right = 0
         count = 0  # Total count of valid subarrays
 
         for right in range(len(nums)):
             # Add current element to frequency map
-            freq[nums[right]] = freq.get(nums[right], 0) + 1
+            freq[nums[right]] += 1
 
             # While window violates the condition |nums[i] - nums[j]| ≤ 2
             # Shrink window from left
