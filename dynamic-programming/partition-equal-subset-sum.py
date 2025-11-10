@@ -2,8 +2,11 @@ class Solution:
     def canPartition(self, nums: List[int]) -> bool:
         """
         goal: find subset that sums to subset_sum
-        dp[i]: is subset including nums[i] that sums to subset_sum (dp[subset_sum]: final result)
         Similar to https://leetcode.com/problems/coin-change-ii/
+        dp[i]: is subset including nums[i] that sums to subset_sum (dp[subset_sum]: final result)
+        dp[i] = OR(
+            dp[i-num] for each num in [remain nums]
+        )
         """
         total_sum = sum(nums)
 
@@ -11,12 +14,11 @@ class Solution:
             return False
         
         subset_sum = total_sum // 2
-        dp = [0] * (subset_sum + 1)
-        dp[0] = 1
+        dp = [False] * (subset_sum + 1)
+        dp[0] = True
         
         for num in nums:
-            for i in range(1, subset_sum+1):
-                if i >= num:
-                    dp[i] += dp[i-num]
+            for j in range(subset_sum, num - 1, -1):
+                dp[j] = dp[j] or dp[j - num]
 
-        return dp[subset_sum] > 0
+        return dp[subset_sum]
