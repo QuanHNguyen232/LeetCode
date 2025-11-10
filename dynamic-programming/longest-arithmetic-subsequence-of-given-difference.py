@@ -7,12 +7,10 @@ class Solution:
             max( dp[j] if nums[i]-nums[j]==diff )
         )
         """
-        n = len(arr)
-        dp = [1]*n
+        dp = defaultdict(int)
 
-        for i in range(n):
-            for j in range(i):
-                if arr[i]-arr[j] == difference:
-                    dp[i] = max(dp[i], dp[j] + 1)
+        for num in arr:
+            num_before = dp[num - difference]
+            dp[num] = num_before+1
 
-        return max(dp)
+        return max(dp.values())
