@@ -6,7 +6,7 @@ class Solution:
             dp[i-square] for each square
         )
         """
-        squares = [i**2 for i in range(1, math.ceil(sqrt(n)))]
+        squares = [i**2 for i in range(1, math.floor(sqrt(n)) + 1)]
         dp = [float('inf')] * (n+1)
         for square in squares:
             dp[square] = 1
