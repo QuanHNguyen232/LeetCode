@@ -19,7 +19,6 @@ class Solution:
             
             while minHeap:
                 elevation, r, c = heappop(minHeap)
-                # print(f"loc ({r},{c}), ele={elevation}")
                 
                 if (r, c) in visited: continue
                 ans = max(ans, elevation)
