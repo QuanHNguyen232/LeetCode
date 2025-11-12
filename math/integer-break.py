@@ -22,6 +22,6 @@ class Solution:
             end = i
             # small optimize: end = (i//2)+1
             for j in range(1, end):
-                dp[i] = max(dp[i], j*dp[i-j])
+                dp[i] = max(dp[i], dp[j]*dp[i-j])
 
         return dp[n]
