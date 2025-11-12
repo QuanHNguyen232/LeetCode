@@ -7,7 +7,7 @@ class Solution:
 
         dp[i]: max product of integers that sum up to i
         dp[i] = max(
-            for each j in [1,i-1] --> i*dp[i-j]
+            for each j in [1,i-1] --> dp[i]*dp[i-j]
         )
         """
         if n <= 3:
