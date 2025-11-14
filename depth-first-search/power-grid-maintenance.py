@@ -1,12 +1,13 @@
 class Solution:
     def processQueries(self, c: int, connections: List[List[int]], queries: List[List[int]]) -> List[int]:
+        # create graph
         graph = defaultdict(list)
         for u, v in connections:
             graph[u].append(v)
             graph[v].append(u)
 
         grids = defaultdict(list)
-        station2grid = {}
+        station2grid = defaultdict(int)
         visited = set()
 
         def dfs(station_idx, grid_idx):
@@ -22,15 +23,14 @@ class Solution:
             for point in graph[station_idx]:
                 dfs(point, grid_idx)
         
+        # run DFS and group by grid
         curr_grid = 0
         for i in range(1, c+1):
             if i in visited: continue
             dfs(station_idx=i, grid_idx=curr_grid)
             curr_grid += 1
 
-        print(grids)
-        print(station2grid)
-
+        # run queries
         is_off = set()
         res = []
         for op, station_id in queries:
@@ -44,8 +44,7 @@ class Solution:
                         grids[grid_idx] # there are stations still ON
                         and grids[grid_idx][0] in is_off
                     ):
-                        # pop until next smallest that is not turned-off
-                        heapq.heappop(grids[grid_idx])
+                        heapq.heappop(grids[grid_idx]) # pop until next smallest that is not turned-off
                     res.append(grids[grid_idx][0]) if grids[grid_idx] else res.append(-1)
             else:
                 is_off.add(station_id)
