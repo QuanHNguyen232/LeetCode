@@ -15,7 +15,7 @@ class Solution:
             v = node % 10
             tree[d-1][p-1] = v
         
-        for d in tree: print(d)
+        for d in tree[:-1]: print(d)
 
         def go_left(d, p):
             # given current d, p --> get left node (by d, p)
@@ -38,8 +38,8 @@ class Solution:
             left_d, left_p = go_left(*root)
             right_d, right_p = go_right(*root)
             if (
-                not tree[left_d][left_p] and
-                not tree[right_d][right_p]
+                tree[left_d][left_p] is None
+                and tree[right_d][right_p] is None
             ):
                 ans.append(sum(curr_path))
 
