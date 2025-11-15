@@ -23,6 +23,7 @@ class Solution:
         for i in range(k, len(nums)):
             curr_val = nums[i]
             if dq and dq[0][1] == i - k:
+                # remove current max if we passed it (not consider it anymore)
                 dq.popleft()
             while dq and curr_val >= dq[-1][0]:
                 dq.pop()
