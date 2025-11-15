@@ -7,16 +7,14 @@ class Solution:
         3        0   0     0   0
         4       00   00   00   00
         """
+        # construct tree
         tree = [[None]*(2**i) for i in range(0, 4+1)]
-        
         for node in nums:
             d = (node//100)%10
             p = (node//10)%10
             v = node % 10
             tree[d-1][p-1] = v
         
-        for d in tree[:-1]: print(d)
-
         def go_left(d, p):
             # given current d, p --> get left node (by d, p)
             return d+1, p*2
@@ -24,6 +22,7 @@ class Solution:
         def go_right(d, p):
             return d+1, (p*2)+1
         
+        # run back track, similar to path-sum-i
         ans = []
         def backtrack(root: [int, int], curr_path: List):
             d, p = root
