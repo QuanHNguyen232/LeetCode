@@ -17,8 +17,8 @@ class Solution:
                 left_num, left_idx = merged[left]
 
                 if right_num - left_num < range_end - range_start:
-                    range_start = merged[left][0]
-                    range_end = merged[right][0]
+                    range_start = left_num
+                    range_end = right_num
 
                 freq[left_idx] -= 1
                 if freq[left_idx] == 0:
