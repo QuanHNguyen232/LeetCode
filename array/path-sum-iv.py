@@ -7,7 +7,7 @@ class Solution:
         3        0   0     0   0
         4       00   00   00   00
         """
-        tree = [[None]*(2**i) for i in range(0, 4)]
+        tree = [[None]*(2**i) for i in range(0, 4+1)]
         
         for node in nums:
             d = (node//100)%10
@@ -15,6 +15,8 @@ class Solution:
             v = node % 10
             tree[d-1][p-1] = v
         
+        for d in tree: print(d)
+
         def go_left(d, p):
             # given current d, p --> get left node (by d, p)
             return d+1, p*2
