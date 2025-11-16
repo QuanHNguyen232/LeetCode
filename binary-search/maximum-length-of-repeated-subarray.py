@@ -18,19 +18,11 @@ class Solution:
             return (0<=i1<n) and (0<=i2<m)
 
         # init dp
-        ans = 0
         for i1 in range(n):
             for i2 in range(m):
                 if nums1[i1] == nums2[i2]:
                     dp[i1][i2] += 1
                     if isInBound(i1-1, i2-1) and nums1[i1-1] == nums2[i2-1]:
                         dp[i1][i2] = max(dp[i1][i2], dp[i1-1][i2-1]+1)
-                        ans = max(ans, dp[i1][i2])
 
-
-
-        # for row in dp: print(row)
-
-
-
-        return ans
+        return max([max(row) for row in dp])
