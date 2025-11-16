@@ -18,7 +18,7 @@ class Solution:
             return (0<=i1<n) and (0<=i2<m)
 
         # init dp
-        ans = 1
+        ans = 0
         for i1 in range(n):
             for i2 in range(m):
                 if nums1[i1] == nums2[i2]:
