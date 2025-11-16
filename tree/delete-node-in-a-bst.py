@@ -50,9 +50,9 @@ class Solution:
 
             # rm connect bw prev & curr
             if curr == prev.left:
-                prev.left = curr.left
+                prev.left = curr.left if curr else None
             else:
-                prev.right = curr.right
+                prev.right = curr.right if curr else None
             print(f'replace: prev={prev.val if prev else prev}, curr={curr.val if curr else curr}')
             return curr
 
