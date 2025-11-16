@@ -35,9 +35,15 @@ class Solution:
         def find_replace_node(node: TreeNode, is_right=True) -> [TreeNode]:
             prev = node
             if is_right:
-                curr = node.left
+                if node.left:
+                    curr = node.left
+                else:
+                    curr = node.right
             else:
-                curr = node.right
+                if node.right:
+                    curr = node.right
+                else:
+                    curr = node.left
             while curr:
                 if is_right and curr.right:
                     prev = curr
