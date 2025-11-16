@@ -22,7 +22,7 @@ class Solution:
             curr = root
             while curr:
                 if curr.val == key:
-                    # print(f'find: prev={prev.val if prev else prev}, curr={curr.val if curr else curr}')
+                    print(f'find: prev={prev.val if prev else prev}, curr={curr.val if curr else curr}')
                     return prev, curr
                 elif key < curr.val:
                     prev = curr
@@ -50,10 +50,10 @@ class Solution:
 
             # rm connect bw prev & curr
             if curr == prev.left:
-                prev.left = None
+                prev.left = curr.left
             else:
-                prev.right = None
-            # print(f'replace: prev={prev.val if prev else prev}, curr={curr.val if curr else curr}')
+                prev.right = curr.right
+            print(f'replace: prev={prev.val if prev else prev}, curr={curr.val if curr else curr}')
             return curr
 
         prev_node, rm_node = find_rm_node(root, key)
@@ -67,12 +67,14 @@ class Solution:
         else:
             replace_node = find_replace_node(rm_node, is_right=False)
 
-
         # connect new node
         if prev_node.left == rm_node:
             prev_node.left = replace_node
         else:
             prev_node.right = replace_node
+        
+        # print("prev_node", prev_node)
+        # print("replace_node", replace_node)
         
         if replace_node is not None:
             # update new node's left and right
