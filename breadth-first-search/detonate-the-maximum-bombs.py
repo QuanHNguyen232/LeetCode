@@ -1,7 +1,6 @@
 class Solution:
     def maximumDetonation(self, bombs: List[List[int]]) -> int:
         # bfs
-        visited = set()
         
         def get_distance(x1,y1, x2,y2):
             return sqrt((x1-x2)**2 + (y1-y2)**2)
@@ -13,10 +12,11 @@ class Solution:
                 distance = get_distance(bomb1[0],bomb1[1], bomb2[0],bomb2[1])
                 if distance <= bomb1[2]:
                     graph[i].append(j)
-                    graph[j].append(i)
-
+        
         def bfs(i):
-            queue = deque([i])
+            visited = set()
+            queue = deque()
+            queue.append(i)
             cnt = 0
             while queue:
                 cur_bomb = queue.popleft()
@@ -26,14 +26,13 @@ class Solution:
                 cnt += 1
 
                 for next_bomb in graph[cur_bomb]:
-                    if next_bomb in visited: continue
-                    queue.append(next_bomb)
+                    if next_bomb not in visited:
+                        queue.append(next_bomb)
 
             return cnt
 
-        ans = 1
+        ans = 0
         for i, bomb1 in enumerate(bombs):
-            if i in visited: continue
             num_bombs = bfs(i)
             ans = max(ans, num_bombs)
 
