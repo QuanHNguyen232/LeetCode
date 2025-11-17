@@ -2,6 +2,9 @@ class Solution:
     def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
         m = len(obstacleGrid)
         n = len(obstacleGrid[0])
+        
+        if obstacleGrid[0][0] == 1 or obstacleGrid[m-1][n-1] == 1: return 0
+        
         grid = [[0]*n for i in range(m)]
         # positions on same rows/cols as (0, 0) have only 1 path
         for r in range(m):
