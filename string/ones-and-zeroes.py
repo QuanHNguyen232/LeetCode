@@ -12,19 +12,20 @@ class Solution:
         M = m
         N = n
         dp = [[[0]*(N+1) for _ in range(M+1)] for _ in range(limit_i)]
-        # base case
+            
+        # dp
         for i in range(limit_i):
             cnter = Counter(strs[i])
             cnt_1 = cnter["1"]
             cnt_0 = cnter["0"]
             for m in range(M+1):
                 for n in range(N+1):
+                    if i == 0:
+                        dp[i][m][n] = 1 if (m-cnt_0>=0 and n-cnt_1>=0) else 0
+                        continue
+                    
                     not_take = dp[i-1][m][n]
                     take = dp[i-1][m - cnt_0][n - cnt_1] + 1 if (m-cnt_0>=0 and n-cnt_1>=0) else 0
                     dp[i][m][n] = max(not_take, take)
-        
-        for i in range(limit_i):
-            for row in dp[i]: print(row)
-            print()
 
         return dp[limit_i-1][M][N]
