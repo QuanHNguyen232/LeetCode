@@ -14,7 +14,7 @@ class Solution:
         # dp = [[0]*(k+1) for _ in range(2*k)]
         # dp[startPos][0] = 1
         # dp[j][0]= 0 for j != startPos
-        
+
         constrains:
         0 <= j <= k
         i-k <= i <= i+k
@@ -23,7 +23,7 @@ class Solution:
         
         
         memo = {}
-        @cache
+        # @cache
         def dp(currPos, stepsUsed):
             key = (currPos, stepsUsed)
             if key in memo:
