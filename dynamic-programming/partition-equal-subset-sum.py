@@ -47,7 +47,7 @@ class Solution:
         n = len(nums)
         dp = [[False]*(target_sum+1) for _ in range(n)]
         # base case
-        dp[0][nums[0]] = True
+        dp[0][0] = True
 
         # DP
         for i in range(1, n):
