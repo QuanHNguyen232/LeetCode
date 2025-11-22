@@ -11,25 +11,27 @@ class Solution:
         """
         if not root: return root
         node = root
-        
+
         if node.left is None and node.right is None:
             pass
         elif node.left is None and node.right is not None:
+            # only right
             self.flatten(node.right)
         elif node.left is not None and node.right is None:
+            # only left
             node.right = node.left
             node.left = None
             self.flatten(node.right)
         else:
             node_left = node.left
-            node_right = node.right
-    
-            self.flatten(node_left)
-            
+
+            left_rightmost = self.find_rightmost(node.left)
+            left_rightmost.right = node.right
+
             node.left = None
             node.right = node_left
-            left_rightmost = self.find_rightmost(node.right)
-            left_rightmost.right = node_right
+
+            self.flatten(node.right)
 
 
     def find_rightmost(self, node: TreeNode) -> TreeNode:
