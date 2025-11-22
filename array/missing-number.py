@@ -26,7 +26,6 @@ class Solution:
                 right = mid
             else:
                 left = mid + 1 # otherwise causes infinite loop
-        print(left, nums[left])
         
         if left == nums[left]: # for [0,1] -> add 2
             return left+1
