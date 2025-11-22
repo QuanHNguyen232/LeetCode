@@ -14,13 +14,13 @@ class RandomizedSet:
     def remove(self, val: int) -> bool:
         if val not in self.dict:
             return False
-        # update list
+        # update
         rm_idx = self.dict[val]
         rplace_idx = self.dict[self.list[-1]]
-        self.list[rm_idx], self.list[rplace_idx] = self.list[rplace_idx], self.list[rm_idx]
-        # update dict
+
         self.dict[self.list[-1]] = rm_idx
-        
+        self.list[rm_idx], self.list[rplace_idx] = self.list[rplace_idx], self.list[rm_idx]
+
         # delete
         self.list.pop()
         del self.dict[val]
