@@ -1,7 +1,34 @@
 class Solution:
     def missingNumber(self, nums):
         # return self.bit(nums)
-        return self.bsearch1(nums)
+        # return self.bsearch1(nums)
+        return self.bsearch2(nums)
+
+    def bsearch2(self, nums):
+        """
+        [0,1,2,3] (index)
+        [0,1,2,3]
+         l m   r
+             l r
+               lr -> out of loop
+        """
+        def condition(mid):
+            return nums[mid]-nums[0] != mid
+
+        nums.sort()
+        if nums[0] != 0:
+            return 0
+        left = 0
+        right = len(nums)-1
+        
+        while left <= right:
+            mid = left + (right - left) // 2 # lower bound
+            if condition(mid):
+                right = mid - 1
+            else:
+                left = mid + 1 # otherwise causes infinite loop
+        
+        return left
 
     def bsearch1(self, nums):
         """
