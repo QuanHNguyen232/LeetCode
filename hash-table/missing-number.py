@@ -15,6 +15,8 @@ class Solution:
             return nums[mid]-nums[0] != mid
 
         nums.sort()
+        if nums[0] != 0:
+            return 0
         left = 0
         right = len(nums)-1
         
@@ -24,7 +26,9 @@ class Solution:
                 right = mid
             else:
                 left = mid + 1 # otherwise causes infinite loop
-        if left == nums[left]:
+        print(left, nums[left])
+        
+        if left == nums[left]: # for [0,1] -> add 2
             return left+1
         return left
 
