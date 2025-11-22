@@ -1,32 +1,21 @@
 class Solution:
     def invalidTransactions(self, transactions: List[str]) -> List[str]:
-        hashmap = defaultdict(list)
-        for trans in transactions:
-            name, time, amount, city = trans.split(',')
-            hashmap[name].append([name, time, amount, city])
+        transactions_by_name = defaultdict(list)
+        invalid_indices = set()
+      
+        for index, transaction in enumerate(transactions):
+            name, time, amount, city = transaction.split(",")
+            time = int(time)
+            amount = int(amount)
 
-        ans = []
-        for name in hashmap.keys():
-            trans = hashmap[name]
-            trans.sort(key=lambda x: int(x[1])) # sort by time
+            transactions_by_name[name].append((index, time, city))
 
-            for i in range(len(trans)):
-                prev = trans[i]
-                prevStr = ",".join(prev)
+            if amount > 1000:
+                invalid_indices.add(index)
 
-                if int(prev[2]) > 1000:
-                    ans.append(prevStr)
-
-                for j in range(i+1, len(trans)):
-                    curr = trans[j]
-                    currStr = ",".join(curr)
-                    # check time <= 60mins
-                    if (
-                        int(curr[1]) - int(prev[1]) <= 60 # time bw transactions <= 60mins
-                        and curr[-1] != prev[-1] # same name, diff city
-                    ):
-                        # add to ans
-                        if currStr not in ans: ans.append(currStr)
-                        if prevStr not in ans: ans.append(prevStr)
-
-        return ans
+            for prev_index, prev_time, prev_city in transactions_by_name[name]:
+                if prev_city != city and abs(time - prev_time) <= 60:
+                    invalid_indices.add(index)
+                    invalid_indices.add(prev_index)
+      
+        return [transactions[i] for i in invalid_indices]
