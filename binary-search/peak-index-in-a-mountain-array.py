@@ -14,12 +14,16 @@ class Solution:
          lm r
             lrm
             r  l
+        
+        [1, 2, 3, 4, 5]
+        [3, 5, 3, 2, 0]
+         l  m        r
         """
-        l = 0
+        l = 1
         r = len(arr) - 1
         while l <= r:
             mid = l + (r-l)//2
-            if mid > 0 and arr[mid-1] < arr[mid]:
+            if arr[mid-1] < arr[mid]:
                 l = mid + 1
             else:
                 r = mid - 1
