@@ -27,6 +27,7 @@ class Solution:
         prev = None
         curr = nodeStart
         while curr:
+            # update link
             tmp = curr.next
             curr.next = prev
             # stop
@@ -36,12 +37,15 @@ class Solution:
             curr = tmp
         return nodeEnd, nodeStart
 
-    def findNode(self, head: Optional[ListNode], val: int) -> (Optional[ListNode], Optional[ListNode], Optional[ListNode]):
+    def findNode(self, head: Optional[ListNode], index: int) -> (Optional[ListNode], Optional[ListNode], Optional[ListNode]):
         prev = None
         curr = head
+        count = 1
         while curr:
-            if curr.val == val:
+            if count == index:
                 return prev, curr, curr.next
+            # go to next node
             prev = curr
             curr = curr.next
+            count += 1
         return None, None, None
