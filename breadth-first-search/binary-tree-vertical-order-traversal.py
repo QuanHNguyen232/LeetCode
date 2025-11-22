@@ -6,6 +6,8 @@
 #         self.right = right
 class Solution:
     def verticalOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if not root: return []
+        
         hashmap = defaultdict(list)
         min_col = max_col = root_col = root_row = 0
 
