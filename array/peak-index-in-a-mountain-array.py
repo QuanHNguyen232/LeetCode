@@ -22,11 +22,11 @@ class Solution:
                   lrm
                r  l
         """
-        l = 0
+        l = 1
         r = len(arr) - 1
         while l <= r:
             mid = l + (r-l)//2
-            if arr[mid-1] <= arr[mid]:
+            if arr[mid-1] < arr[mid]:
                 l = mid + 1
             else:
                 r = mid - 1
