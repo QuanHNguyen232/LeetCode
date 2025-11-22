@@ -1,40 +1,7 @@
 class Solution:
     def missingNumber(self, nums):
         # return self.bit(nums)
-        assert self.bsearch1(nums) == self.bsearch2(nums)
         return self.bsearch1(nums)
-
-    def bsearch2(self, nums):
-        """
-        [0, 1, 2, 3] (index)
-        [0, 1, 2, 3]
-         l  m     r
-               lm r
-                  lr-> condition=False
-                  r  l -> out of loop
-        
-        [0, 1, 2, 3] (index)
-        [0, 1, 2, 4]
-         l  m     r
-               lm r
-                  lrm -> condition=True
-               r  l -> out of loop
-        """
-        def condition(mid):
-            return nums[mid]-nums[0] != mid
-
-        nums.sort()
-        left = 0
-        right = len(nums) - 1
-        while left <= right:
-            mid = left + (right - left) // 2
-            if condition(mid):
-                right = mid - 1  # search better result on the left side
-            else:
-                left = mid + 1  # search result on the right side
-
-        return left
-
 
     def bsearch1(self, nums):
         """
