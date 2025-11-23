@@ -4,6 +4,8 @@ class Solution:
         for src, dst, c in zip(original, changed, cost):
             graph[src].append((c, dst))
 
+        # using dijkstra only causes TLE --> use memory (DP)
+        @cache
         def dijkstra(src: str, dst: str) -> int:
             """
             return min cost (int) to convert from src -> dst
