@@ -20,31 +20,20 @@ class Solution:
         MOD = 1e9+7
         dp = [[[0]*k for _ in range(ncols)] for _ in range(nrows)]
         
-        # init
+        # base case
         dp[0][0][grid[0][0] % k] = 1
-        # by 0-row
-        for j in range(1, ncols):
-            currMod = grid[0][j] % k
-            for prevMod in range(k):
-                prev_cnt = dp[0][j-1][prevMod]
-                new_mod = (prevMod + currMod) % k
-                dp[0][j][new_mod] = prev_cnt %MOD
-        # by 0-col
-        for i in range(1, nrows):
-            currMod = grid[i][0] % k
-            for prevMod in range(k):
-                prev_cnt = dp[i-1][0][prevMod]
-                new_mod = (prevMod + currMod) % k
-                dp[i][0][new_mod] = prev_cnt %MOD
         
         # compute dp
-        for i in range(1, nrows):
-            for j in range(1, ncols):
+        for i in range(nrows):
+            for j in range(ncols):
+                if i==0 and j==0: continue
+
                 currMod = grid[i][j] % k
+
                 # update dp
                 for prevMod in range(k):
-                    up_cnt, left_cnt = dp[i-1][j][prevMod], dp[i][j-1][prevMod]
-                    new_mod = (prevMod + currMod) % k
-                    dp[i][j][new_mod] = (up_cnt + left_cnt) %MOD
+                    up_cnt = dp[i-1][j][prevMod] if i >= 1 else 0
+                    left_cnt = dp[i][j-1][prevMod] if j >= 1 else 0
+                    dp[i][j][(prevMod + currMod) % k] = (up_cnt + left_cnt) %MOD
         
         return int(dp[-1][-1][0])
