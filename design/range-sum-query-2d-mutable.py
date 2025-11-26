@@ -12,25 +12,13 @@ class NumMatrix:
             for c in range(0, self.ncols):
                 self.prefix[r][c] += self.prefix[r-1][c]
         
-        # print("original")
-        # for row in self.original: print(row)
-        # print("prefix")
-        # for row in self.prefix: print(row)
-        
     def update(self, row: int, col: int, val: int) -> None:
         diff = val - self.original[row][col]
-        # print(f"update with ({row},{col}) val={val} --> change={diff}")
-        
         self.original[row][col] += diff
+
         for r in range(row, self.nrows):
             for c in range(col, self.ncols):
                 self.prefix[r][c] += diff
-        
-        
-        # print("original")
-        # for row in self.original: print(row)
-        # print("prefix")
-        # for row in self.prefix: print(row)
 
     def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -> int:
         ans = self.prefix[row2][col2]
