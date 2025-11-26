@@ -2,10 +2,9 @@ class NumMatrix:
 
     def __init__(self, matrix: List[List[int]]):
         self.nrows = len(matrix)
-        self.ncols = len(matrix)
-        self.original = matrix
-        self.prefix = deepcopy(matrix)
-
+        self.ncols = len(matrix[0])
+        self.original = deepcopy(matrix)
+        self.prefix = matrix
         for i, row in enumerate(self.prefix):
             self.prefix[i] = list(itertools.accumulate(row))
         
@@ -13,13 +12,25 @@ class NumMatrix:
             for c in range(0, self.ncols):
                 self.prefix[r][c] += self.prefix[r-1][c]
         
+        # print("original")
+        # for row in self.original: print(row)
+        # print("prefix")
+        # for row in self.prefix: print(row)
+        
     def update(self, row: int, col: int, val: int) -> None:
         diff = val - self.original[row][col]
-        self.original[row][col] = val
-
+        # print(f"update with ({row},{col}) val={val} --> change={diff}")
+        
+        self.original[row][col] += diff
         for r in range(row, self.nrows):
             for c in range(col, self.ncols):
                 self.prefix[r][c] += diff
+        
+        
+        # print("original")
+        # for row in self.original: print(row)
+        # print("prefix")
+        # for row in self.prefix: print(row)
 
     def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -> int:
         ans = self.prefix[row2][col2]
