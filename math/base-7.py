@@ -1,5 +1,7 @@
 class Solution:
     def convertToBase7(self, num: int) -> str:
+        if num == 0: return "0"
+        
         BASE = 7
         ans = []
         sign = num // abs(num)
@@ -10,5 +12,5 @@ class Solution:
         
         if sign < 0:
             ans.append("-")
-            
+
         return ''.join(ans[::-1])
