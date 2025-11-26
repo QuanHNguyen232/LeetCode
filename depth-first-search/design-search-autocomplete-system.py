@@ -1,7 +1,6 @@
 class TrieNode:
     def __init__(self):
         self.child = {}
-        self.sentences = defaultdict(int)
         self.countEnd = 0
 
 class Trie:
@@ -14,7 +13,6 @@ class Trie:
             if c not in curr.child:
                 curr.child[c] = TrieNode()
             curr = curr.child[c]
-            curr.sentences[word] += freq
         curr.countEnd += freq
 
     def search(self, keyword: Union[List[str], str]) -> List[Tuple[str, int]]:
@@ -23,8 +21,6 @@ class Trie:
             if c not in curr.child:
                 return []
             curr = curr.child[c]
-        
-        # ans = list(curr.sentences.items())
         
         ans=[]
         self.backtrack(ans, curr, path=[])
@@ -37,11 +33,9 @@ class Trie:
             ans.append((''.join(path), curr.countEnd))
         # recursion
         for next_char in curr.child:
-            self.backtrack(ans, curr.child[next_char], path+[next_char])
-    
-    def __str__(self):
-        ans = self.search("")
-        return '\n'.join(f"cnt:{cnt}, s={s}" for s, cnt in ans)
+            path.append(next_char)
+            self.backtrack(ans, curr.child[next_char], path)
+            path.pop()
 
 class AutocompleteSystem:
 
@@ -51,8 +45,6 @@ class AutocompleteSystem:
         self.trie = Trie()
         for sent, freq in zip(sentences, times):
             self.trie.insert(sent, freq)
-
-        # print(self.trie)
 
     def input(self, c: str) -> List[str]:
         if c == "#":
@@ -65,9 +57,7 @@ class AutocompleteSystem:
         keyword = "".join(self.curr_search)
         matches = self.trie.search(keyword)
         matches.sort(key=lambda x: [-x[1], x[0]])
-        # print(f"curr_search={self.curr_search}, {matches}")
-        ans = matches[:self.LIMIT]
-        return [keyword+sent for sent, cnt in ans]
+        return [keyword+sent for sent, cnt in matches[:self.LIMIT]]
 
 
 # Your AutocompleteSystem object will be instantiated and called as such:
