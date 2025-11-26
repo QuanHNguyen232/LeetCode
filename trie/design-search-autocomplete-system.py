@@ -2,6 +2,7 @@ class TrieNode:
     def __init__(self):
         self.child = {}
         self.sentences = defaultdict(int)
+        self.countEnd = 0
 
 class Trie:
     def __init__(self):
@@ -14,6 +15,7 @@ class Trie:
                 curr.child[c] = TrieNode()
             curr = curr.child[c]
             curr.sentences[word] += freq
+        curr.countEnd += freq
 
     def search(self, keyword: Union[List[str], str]) -> List[Tuple[str, int]]:
         curr = self.root
@@ -22,32 +24,20 @@ class Trie:
                 return []
             curr = curr.child[c]
         
-        ans = list(curr.sentences.items())
-        # self.dfs(curr)
-        # self.backtrack(ans, curr, path=[])
+        # ans = list(curr.sentences.items())
+        
+        ans=[]
+        self.backtrack(ans, curr, path=[])
 
         return ans
     
     def backtrack(self, ans, curr: TrieNode, path: List[str]):
         # base
         if curr.countEnd:
-            ans.append((curr.countEnd, ''.join(path)))
+            ans.append((''.join(path), curr.countEnd))
         # recursion
         for next_char in curr.child:
             self.backtrack(ans, curr.child[next_char], path+[next_char])
-
-    # def dfs(self, curr)-> List[str]:
-    #     ans = []
-    #     # backtrack
-    #     def backtrack(ans, curr, path: List[str]):
-    #         # base
-    #         if curr.countEnd:
-    #             ans.append((curr.countEnd, ''.join(path)))
-    #         # recursion
-    #         for next_char in curr.child:
-    #             backtrack(ans, curr.child[next_char], path+[next_char])
-    #     backtrack(curr, [])
-    #     return ans
     
     def __str__(self):
         ans = self.search("")
@@ -77,7 +67,7 @@ class AutocompleteSystem:
         matches.sort(key=lambda x: [-x[1], x[0]])
         # print(f"curr_search={self.curr_search}, {matches}")
         ans = matches[:self.LIMIT]
-        return [sent for sent, cnt in ans]
+        return [keyword+sent for sent, cnt in ans]
 
 
 # Your AutocompleteSystem object will be instantiated and called as such:
