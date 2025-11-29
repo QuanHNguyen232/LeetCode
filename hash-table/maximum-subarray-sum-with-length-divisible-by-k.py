@@ -3,7 +3,7 @@ class Solution:
         n = len(nums)
         prefixSum = 0
         maxSum = -math.inf
-        kSum = [math.inf // 2] * k
+        kSum = [math.inf] * k
         kSum[k - 1] = 0
         for i in range(n):
             prefixSum += nums[i]
