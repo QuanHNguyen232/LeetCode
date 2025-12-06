@@ -1,19 +1,8 @@
 class Solution:
     def countPartitions(self, nums: List[int], k: int) -> int:
         """
-        [9,4,1,3,7]
-        [9]: 1
-        [9, 4]: 1
-        [9, 4, 1]: 2 ([9]: 1 + [4,1]: 2)
-        [9, 4, 1, 3]: 4 ([9]: 1 + [4,1,3]:3)
-        [9, 4, 1, 3, 7]: 6 ([9]: 1 + [4,1,3]:3 + [3,7]: 2)
 
-        dp[i]: num of ways for items 0...i (inclusive)
-        dp[i] = (
-            . if nums[i] make max-min<=k -> dp[i-1] + 1
-            . if nums[i] make invalid -> dp[i-1]
-            with max, min are monotonic stacks
-        )
+        dp[i]: num of ways for items 0...i-1
         """
         n = len(nums)
         MOD = 10**9 + 7
@@ -23,7 +12,6 @@ class Solution:
         max_q = deque()
 
         dp[0] = 1
-        prefix[0] = 1
         j = 0
 
 
@@ -46,11 +34,7 @@ class Solution:
                     min_q.popleft()
                 j += 1
 
-            if j > 0:
-                dp[i + 1] = (prefix[i] - prefix[j - 1]) % MOD
-            else:
-                dp[i + 1] = prefix[i] % MOD
-            
-            prefix[i + 1] = (prefix[i] + dp[i + 1]) % MOD
+            for idx in range(j, i + 1):
+                dp[i + 1] = (dp[i + 1] + dp[idx]) % MOD
 
         return dp[n]
