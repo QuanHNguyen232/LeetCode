@@ -1,9 +1,35 @@
 class Solution:
     def countPartitions(self, nums: List[int], k: int) -> int:
         """
-
         dp[i]: num of ways for items 0...i-1
         """
+        return self.sln_2(nums, k)
+        return self.sln_1(nums, k)
+
+    def sln_2(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        mod = 10**9 + 7
+        dp = [0] * (n + 1)
+        prefix = [0] * (n + 1)
+        cnt = SortedList()
+
+        dp[0] = 1
+        prefix[0] = 1
+
+        j = 0
+        for i in range(n):
+            cnt.add(nums[i])
+            # adjust window, maintain valid max-min <= k
+            while j <= i and cnt[-1] - cnt[0] > k:
+                cnt.remove(nums[j])
+                j += 1
+            
+            dp[i + 1] = (prefix[i] - (prefix[j - 1] if j > 0 else 0)) % mod
+            prefix[i + 1] = (prefix[i] + dp[i + 1]) % mod
+
+        return dp[n]
+
+    def sln_1(self, nums: List[int], k: int) -> int:
         n = len(nums)
         MOD = 10**9 + 7
         dp = [0] * (n + 1)
@@ -12,6 +38,7 @@ class Solution:
         max_q = deque()
 
         dp[0] = 1
+        prefix[0] = 1
         j = 0
 
 
@@ -34,7 +61,11 @@ class Solution:
                     min_q.popleft()
                 j += 1
 
-            for idx in range(j, i + 1):
-                dp[i + 1] = (dp[i + 1] + dp[idx]) % MOD
+            if j > 0:
+                dp[i + 1] = (prefix[i] - prefix[j - 1]) % MOD
+            else:
+                dp[i + 1] = prefix[i] % MOD
+            
+            prefix[i + 1] = (prefix[i] + dp[i + 1]) % MOD
 
         return dp[n]
