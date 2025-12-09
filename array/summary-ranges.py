@@ -1,8 +1,9 @@
 class Solution:
     def summaryRanges(self, nums: List[int]) -> List[str]:
         return self.sln1(nums)
-        
+
     def sln1(self, nums: List[int]) -> List[str]:
+        if not nums: return []
         curr_range = nums[0]
         ans = [str(curr_range)]
         
