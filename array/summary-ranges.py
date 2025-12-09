@@ -1,6 +1,7 @@
 class Solution:
     def summaryRanges(self, nums: List[int]) -> List[str]:
-        return self.sln1(nums)
+        # return self.sln1(nums)
+        return self.sln2(nums)
 
     def sln1(self, nums: List[int]) -> List[str]:
         if not nums: return []
@@ -18,5 +19,23 @@ class Solution:
                     ans.append(str(num))
 
             curr_range = num
+
+        return ans
+    
+    def sln2(self, nums: List[int]) -> List[str]:
+        ans = []
+        i = 0
+        n = len(nums)
+
+        while i < n:
+            start = nums[i]
+            while i + 1 < n and nums[i] + 1 == nums[i + 1]:
+                i += 1
+
+            end = nums[i]
+            append_str = f"{start}->{end}" if start != end else str(end)
+            ans.append(append_str)
+
+            i += 1
 
         return ans
