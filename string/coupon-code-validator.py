@@ -1,13 +1,21 @@
 class Solution:
     def validateCoupons(self, code: List[str], businessLine: List[str], isActive: List[bool]) -> List[str]:
-        ans = []
+        cate_order = {
+            key: idx
+            for idx, key in enumerate(["electronics", "grocery", "pharmacy", "restaurant"])
+        }
+        grps = [[] for _ in range(len(cate_order))]
 
         for (curr_code, category, status) in zip(code, businessLine, isActive):
             if (
-                curr_code and curr_code.replace("_", "").isalnum()
+                len(curr_code) > 0 and curr_code.replace("_", "").isalnum()
                 and status
-                and category in ["electronics", "grocery", "pharmacy", "restaurant"]
+                and category in cate_order
             ):
-                ans.append(curr_code)
+                grps[cate_order[category]].append(curr_code)
 
-        return sorted(ans)
+        grps = [sorted(grp) for grp in grps]
+        ans = []
+        for grp in grps:
+            ans.extend(sorted(grp))
+        return ans
