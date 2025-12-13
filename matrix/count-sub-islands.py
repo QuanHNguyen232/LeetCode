@@ -52,7 +52,7 @@ class Solution:
                     # check curr_island idx on grid1 using (r, c)
                     island_idx = grid1[r][c]
                     # check is subset (subisland)
-                    if (island_idx in id2set_1) and curr_island.issubset(id2set_1[island_idx]):
+                    if (island_idx in id2set) and curr_island.issubset(id2set[island_idx]):
                         count += 1
 
         return count
