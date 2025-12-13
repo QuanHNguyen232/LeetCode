@@ -8,7 +8,7 @@ class Solution:
 
         for (curr_code, category, status) in zip(code, businessLine, isActive):
             if (
-                len(curr_code) > 0 and curr_code.replace("_", "").isalnum()
+                len(curr_code) > 0 and curr_code.replace("_", "a").isalnum()
                 and status
                 and category in cate_order
             ):
