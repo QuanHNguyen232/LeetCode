@@ -6,8 +6,8 @@ class Solution:
         def is_col_sorted(col):
             curr = strs[0][col]
             for row in strs[1:]:
-                if curr > row[col]:
-                    return False
+                if curr > row[col]: return False
+                curr = row[col]
             return True
 
         for col in range(str_len):
