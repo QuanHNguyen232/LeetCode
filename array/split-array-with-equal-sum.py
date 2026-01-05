@@ -15,12 +15,13 @@ class Solution:
         pre_sum = list(itertools.accumulate(nums))
 
         def can_split_half(pre_sum, start, end) -> set:
-            """
+            """to find i and k. MUST: start < i,k < end
             start, end: inclusive
-
-            must return all possible cases that can be splitted
-            e.g: [1,2,-1,1,2,5,2,5,2]
-            j = 5
+                for i: start = 0, end=j-1
+                for k: start = j+1, end=n-1
+            
+            Note: must return all possible cases that can be splitted
+            e.g: [1,2,-1,1,2,5,2,5,2], j = 5
             -> find 2 cases for i: i=2 (split_val=3) and i=3 (split_val=2)
             """
             ans = set()
@@ -31,8 +32,8 @@ class Solution:
                 right_sum -= nums[i]
                 if i > start:
                     left_sum += nums[i - 1]
-                # print(f"\t\ti={i}, left_sum={left_sum}, right_sum={right_sum}")
-                if left_sum == right_sum:
+                # print(f"\t\ti={i}, left_sum={left_sum}, right_sum={right_sum}, idx={i if left_sum == right_sum and start < i < end else None}")
+                if left_sum == right_sum and start < i < end:
                     ans.add(left_sum)
             return ans
         
@@ -44,7 +45,7 @@ class Solution:
                 # largest k = n-2 (s.t. can get sum(k+1, n-1)) and j + 1 < k < n - 1 ==> j <= n-4
                 continue
 
-            # print(f"j={j}")
+            print(f"j={j}")
 
             # find if can find i that can split 0...j by half
             split_vals_i = can_split_half(pre_sum, 0, j-1)
@@ -52,10 +53,10 @@ class Solution:
             # find if can find k that can split j...n by half
             split_vals_k = can_split_half(pre_sum, j+1, n-1)
             
-            # print(f"find i={split_vals_i}, k={split_vals_k}")
+            print(f"find i={split_vals_i}, k={split_vals_k}")
 
             if split_vals_i & split_vals_k:
                 return True
 
         return False
-        
+        # [0,-3,10,-10,-8,-7,5,-7,5,-3]
