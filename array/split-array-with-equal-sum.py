@@ -26,8 +26,9 @@ class Solution:
                 if i > start:
                     left_sum += nums[i - 1]
                 # print(f"\t\ti={i}, left_sum={left_sum}, right_sum={right_sum}")
-                if left_sum == right_sum: return True
-            return False
+                if left_sum == right_sum:
+                    return i, left_sum
+            return -1, 0
         
 
         if n < 7: return False
@@ -36,15 +37,18 @@ class Solution:
                 # smallest i = 1 (s.t. can get sum(0, i-1)) and i+1 < j ==> j >= 3
                 # largest k = n-2 (s.t. can get sum(k+1, n-1)) and j + 1 < k < n - 1 ==> j <= n-4
                 continue
-                
+
             # print(f"j={j}")
 
             # find if can find i that can split 0...j by half
-            can_find_i = can_split_half(pre_sum, 0, j-1)
+            idx_i, split_val_i = can_split_half(pre_sum, 0, j-1)
             
             # find if can find k that can split j...n by half
-            can_find_k = can_split_half(pre_sum, j+1, n-1)
+            idx_k, split_val_k = can_split_half(pre_sum, j+1, n-1)
             
-            if can_find_i and can_find_k: return True
+            # print(f"find i={(idx_i, split_val_i)}, k={(idx_k, split_val_k)}")
+
+            if idx_i != -1 and idx_k != -1 and split_val_i == split_val_k:
+                return True
 
         return False
