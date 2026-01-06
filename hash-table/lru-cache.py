@@ -52,7 +52,8 @@ class LRUCache:
                 self.tracker.remove(key)
 
             if len(self.hash) >= self.capacity: # if max capacity:
-                self.tracker.remove(self.tracker.get_least_key())
+                least_key = self.tracker.get_least_key()
+                self.tracker.remove(least_key)
                 del self.hash[least_key]
 
             # add new key-val
