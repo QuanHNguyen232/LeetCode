@@ -13,7 +13,7 @@ class LRUCache:
         self.capacity = capacity
         
         # whether use approach 1 (doubly linked-list) or approach 2 (OrderedDict)
-        self.approach_1 = False
+        self.approach_1 = True
 
         if self.approach_1:
             self.hash = {}
@@ -51,24 +51,26 @@ class LRUCache:
             if key in self.hash: # update recent use --> most recent use
                 self.tracker.remove(key)
 
-            if len(self.hash) >= self.capacity: # if max capacity:
-                least_key = self.tracker.get_least_key()
-                self.tracker.remove(least_key)
-                del self.hash[least_key]
-
             # add new key-val
             self.tracker.insert_front(key)
             self.hash[key] = value
+
+            if len(self.hash) > self.capacity: # if max capacity:
+                least_key = self.tracker.get_least_key()
+                self.tracker.remove(least_key)
+                del self.hash[least_key]
 
         else:
             if key in self.tracker: # update recent use --> most recent use
                 self.tracker.move_to_end(key, last=True)
 
-            if len(self.tracker) >= self.capacity: # if max capacity:
-                self.tracker.popitem(last=False)
-
             # add new key-val
             self.tracker[key] = value
+            
+            if len(self.tracker) > self.capacity: # if max capacity:
+                self.tracker.popitem(last=False)
+
+            
 
 class Node:
     def __init__(self, key, prevNode, nextNode):
