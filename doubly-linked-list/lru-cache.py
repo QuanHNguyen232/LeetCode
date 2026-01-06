@@ -13,7 +13,7 @@ class LRUCache:
         self.capacity = capacity
         
         # whether use approach 1 (doubly linked-list) or approach 2 (OrderedDict)
-        self.approach_1 = True
+        self.approach_1 = False
 
         if self.approach_1:
             self.hash = {}
