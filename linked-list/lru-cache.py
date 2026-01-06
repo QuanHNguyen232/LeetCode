@@ -64,13 +64,11 @@ class LRUCache:
             if key in self.tracker: # update recent use --> most recent use
                 self.tracker.move_to_end(key, last=True)
 
-            # add new key-val
-            self.tracker[key] = value
-            
-            if len(self.tracker) > self.capacity: # if max capacity:
+            if len(self.tracker) >= self.capacity: # if max capacity:
                 self.tracker.popitem(last=False)
 
-            
+            # add new key-val
+            self.tracker[key] = value
 
 class Node:
     def __init__(self, key, prevNode, nextNode):
