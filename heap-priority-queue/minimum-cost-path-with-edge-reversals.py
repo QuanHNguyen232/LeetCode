@@ -7,11 +7,11 @@ class Solution:
         
         def dijkstra(start, end):
             queue = []
-            heappush(queue, (start, 0))
+            heappush(queue, (0, start))
             visited = set()
 
             while queue:
-                curr, cost = heappop(queue)
+                cost, curr = heappop(queue)
                 if curr in visited: continue
                 if curr == end:
                     return cost
@@ -19,7 +19,7 @@ class Solution:
 
                 for neighbor, weight in graph[curr]:
                     if neighbor not in visited:
-                        heappush(queue, (neighbor, cost + weight))
+                        heappush(queue, (cost + weight, neighbor))
 
             return -1
         
