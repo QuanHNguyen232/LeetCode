@@ -9,7 +9,8 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-        if not root: return root
+        if not root:
+            return
         node = root
 
         if node.left is None and node.right is None:
@@ -24,9 +25,10 @@ class Solution:
             self.flatten(node.right)
         else:
             node_left = node.left
+            node_right = node.right
 
-            left_rightmost = self.find_rightmost(node.left)
-            left_rightmost.right = node.right
+            left_rightmost = self.find_rightmost(node_left)
+            left_rightmost.right = node_right
 
             node.left = None
             node.right = node_left
