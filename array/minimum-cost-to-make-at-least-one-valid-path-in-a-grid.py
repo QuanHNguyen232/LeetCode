@@ -23,19 +23,20 @@ class Solution:
             while arr:
                 cost, r, c = heapq.heappop(arr)
                 
-                if cost_map[r][c] < cost: continue
-                cost_map[r][c] = cost
-                if (r, c) == target: return
-                curr_dir = grid[r][c]
-                
-                for id, (mr, mc) in directions.items():
-                    new_r, new_c = r+mr, c+mc
-                    new_cost = cost if id==curr_dir else cost+1
-                    if (
-                        is_in_bound(new_r, new_c)
-                        and new_cost < cost_map[new_r][new_c]
-                    ): 
-                        heapq.heappush(arr, (new_cost, new_r, new_c))
+                # if cost_map[r][c] < cost: continue
+                if cost_map[r][c] > cost:
+                    cost_map[r][c] = cost
+                    if (r, c) == target: return
+                    curr_dir = grid[r][c]
+                    
+                    for id, (mr, mc) in directions.items():
+                        new_r, new_c = r+mr, c+mc
+                        new_cost = cost if id==curr_dir else cost+1
+                        if (
+                            is_in_bound(new_r, new_c)
+                            and new_cost < cost_map[new_r][new_c]
+                        ): 
+                            heapq.heappush(arr, (new_cost, new_r, new_c))
         
         dijkstra()
         return cost_map[nrows-1][ncols-1]
