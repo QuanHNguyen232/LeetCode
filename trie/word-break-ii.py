@@ -1,10 +1,14 @@
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
         
-        return self.sln_backtrack(s, wordDict)
+        # return self.sln_backtrack(s, wordDict)
+        return self.sln_dp(s, wordDict)
         
     def sln_backtrack(self, s: str, wordDict: List[str]) -> List[str]:
         """
+        Time: O(n 2^n)
+        Space: O(2^n)
+
         "catsanddog" (n=10)
         check:
         - i=0 (s[:i+1]="c") -> continue
@@ -47,3 +51,36 @@ class Solution:
 
         backtrack(0, [])
         return ans
+    
+    def sln_dp(self, s: str, wordDict: List[str]) -> List[str]:
+        """
+        Time: O(n 2^n)
+        Space: O(n 2^n)
+        """
+        word_set = set(wordDict)
+        memoization = {}
+
+        def helper(remaining_str: str, word_set: set, memoization: dict):
+            # Check if result for this substring is already memoized
+            if remaining_str in memoization:
+                return memoization[remaining_str]
+            # Base case: when the string is empty, return a list containing an empty string
+            if not remaining_str:
+                return [""]
+            results = []
+            for i in range(1, len(remaining_str) + 1):
+                current_word = remaining_str[:i]
+                # If the current substring is a valid word
+                if current_word in word_set:
+                    for next_word in helper(
+                        remaining_str[i:], word_set, memoization
+                    ):
+                        # Append current word and next word with space in between if next word exists
+                        results.append(
+                            current_word + (" " if next_word else "") + next_word
+                        )
+            # Memoize the results for the current substring
+            memoization[remaining_str] = results
+            return results
+        
+        return helper(s, word_set, memoization)
